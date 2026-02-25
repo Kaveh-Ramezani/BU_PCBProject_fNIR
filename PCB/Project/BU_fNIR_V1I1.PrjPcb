@@ -251,7 +251,7 @@ ClassGenCCAutoRoomEnabled=0
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=RDNKUJBM
 
 [Document13]
 DocumentPath=..\..\..\..\..\AltiumLibrary\Electro Mechanical\ElectroMechanical.DbLib
@@ -303,6 +303,74 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
+
+[Document16]
+DocumentPath=..\PCB\Panel.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=UJXMIKDO
+
+[Document17]
+DocumentPath=..\PCB\MCUBoard.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=PLXKNFQO
+
+[Document18]
+DocumentPath=..\PCB\IR1.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=RKHYWDRJ
+
+[Document19]
+DocumentPath=..\PCB\IR2.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=NUJNOIMQ
 
 [GeneratedDocument1]
 DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\BU_fNIR_V1I1.EXTREP
@@ -466,6 +534,262 @@ DItemRevisionGUID=
 
 [GeneratedDocument41]
 DocumentPath=Project Outputs for BU_fNIR_V1I1\Design Rule Check - BU_fNIR_V1I1.html
+DItemRevisionGUID=
+
+[GeneratedDocument42]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\Design Rule Check - MCUBoard.html
+DItemRevisionGUID=
+
+[GeneratedDocument43]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument44]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1.REP
+DItemRevisionGUID=
+
+[GeneratedDocument45]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Board.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument46]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument47]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument48]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Drawing_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument49]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Drillmap_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument50]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument51]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument52]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_NPTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument53]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument54]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument55]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument56]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_PTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument57]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument58]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR1_Soldermask_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument59]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument60]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Board.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument61]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument62]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument63]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Drawing_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument64]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Drillmap_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument65]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument66]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument67]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_NPTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument68]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument69]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument70]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument71]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_PTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument72]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument73]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\IR2_Soldermask_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument74]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Board.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument75]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument76]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument77]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Drawing_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument78]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Drillmap_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument79]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Keep-out.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument80]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument81]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument82]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Mechanical_10.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument83]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_NPTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument84]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Pads_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument85]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Pads_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument86]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument87]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument88]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument89]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_PTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument90]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument91]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\MCUBoard_Soldermask_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument92]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Board.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument93]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument94]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument95]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Keep-out.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument96]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument97]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument98]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Mechanical_10.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument99]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Pads_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument100]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Pads_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument101]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument102]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument103]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument104]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument105]
+DocumentPath=Project Outputs for BU_fNIR_V1I1\GerberX2\Panel_Soldermask_Top.gbr
 DItemRevisionGUID=
 
 [Configuration1]
