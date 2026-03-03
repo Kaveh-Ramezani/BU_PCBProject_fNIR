@@ -1,0 +1,25 @@
+--cpu=Cortex-M33
+"mx\startup_stm32h503xx.o"
+"mx\main.o"
+"mx\stm32h5xx_hal_cortex.o"
+"mx\stm32h5xx_hal_icache.o"
+"mx\stm32h5xx_hal_rcc.o"
+"mx\stm32h5xx_hal_rcc_ex.o"
+"mx\stm32h5xx_hal_flash.o"
+"mx\stm32h5xx_hal_flash_ex.o"
+"mx\stm32h5xx_hal_gpio.o"
+"mx\stm32h5xx_hal_dma.o"
+"mx\stm32h5xx_hal_dma_ex.o"
+"mx\stm32h5xx_hal_pwr.o"
+"mx\stm32h5xx_hal_pwr_ex.o"
+"mx\stm32h5xx_hal.o"
+"mx\stm32h5xx_hal_exti.o"
+"mx\system_stm32h5xx.o"
+"mx\mcal.o"
+"mx\mcal_lcfg.o"
+"mx\app.o"
+"mx\bsw.o"
+--strict --scatter "MX\MX.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "MX.map" -o MX\MX.axf

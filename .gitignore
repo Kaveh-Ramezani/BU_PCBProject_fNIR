@@ -41,3 +41,12 @@ PCB/Project/exports
 
 Docs/datasheets/*
 Project Outputs for*
+
+# Firmware
+Firmware/Demo/Mx/*
+!Firmware/Demo/Mx/.mxproject
+!Firmware/Demo/Mx/MX.ioc
+
+Firmware/Final/Mx/*
+!Firmware/Final/Mx/Firmware.ioc
+!Firmware/Final/Mx/.mxproject
