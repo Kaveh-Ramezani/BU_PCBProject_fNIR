@@ -14,3 +14,18 @@
 /*************************************************************************
                           Variables
 *************************************************************************/
+TIM_HandleTypeDef htim1;
+/* The pwm channels configurations */
+const TIM_PWM_ChannelMappingType g_TIM_PWM_ChannelMapping[TIM_PWM_CHANNELS] =
+{
+  /* 0 : LED1 */
+  {
+    &htim1 /* htim */, 
+    TIM_CHANNEL_1 /* timerChannel */,
+  },
+  /* 1 : LED2 */
+  {
+    &htim1 /* htim */, 
+    TIM_CHANNEL_2 /* timerChannel */,
+  },
+};

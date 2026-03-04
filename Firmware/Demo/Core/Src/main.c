@@ -7,7 +7,6 @@ int main(void)
 {
   Mcal_Init();
   Bsw_Init();
-  HAL_Init();
   Application_Init();
 
   while (1)

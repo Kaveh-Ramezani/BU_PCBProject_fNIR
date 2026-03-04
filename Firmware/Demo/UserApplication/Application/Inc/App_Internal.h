@@ -11,8 +11,10 @@ extern "C" {
 /*************************************************************************
                             Macro definition
 *************************************************************************/
-#define GetLastState()    (g_App_pinStates.lastState)
-#define GetCurrentState() (g_App_pinStates.currentState)
+#define GetLastState()          (g_App_pinStates.lastState)
+#define GetCurrentState()       (g_App_pinStates.currentState)
+#define IsStateChangeHappend()  ((GetCurrentState() == PinState_High) && (GetLastState() == PinState_Low))
+#define IsStateChanged()        (g_App_pinStates.changed == STD_HIGH)
 /*************************************************************************
                             Type definition
 *************************************************************************/

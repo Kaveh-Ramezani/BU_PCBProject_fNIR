@@ -60,7 +60,7 @@ extern "C" {
 #endif
 
 #ifndef STD_HIGH
-  #define STD_HIGH  0x00u /*!< The standard HIGH directive. */
+  #define STD_HIGH  0x01u /*!< The standard HIGH directive. */
 #endif
 
 #ifndef STD_IDLE

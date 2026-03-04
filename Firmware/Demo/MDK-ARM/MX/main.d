@@ -19,6 +19,8 @@ mx/main.o: ..\Core\Src\main.c ..\UserApplication\Inc\Std_Types.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_flash_ex.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_pwr.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_pwr_ex.h \
+  ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_tim.h \
+  ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_tim_ex.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_exti.h \
   ..\UserApplication\Application\Inc\App.h \
   ..\UserApplication\Mcal\Inc\Mcal.h ..\UserApplication\Bsw\Inc\Bsw.h

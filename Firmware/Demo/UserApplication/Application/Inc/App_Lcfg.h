@@ -16,6 +16,9 @@ extern "C" {
 #define LED_PIN   GPIO_PIN_5
 #define IN_PORT   GPIOC
 #define IN_PIN    GPIO_PIN_13
+
+#define LED1_CHANNEL_IDX  0u
+#define LED2_CHANNEL_IDX  1u
 /*************************************************************************
                         Type definition
 *************************************************************************/

@@ -20,6 +20,7 @@ mx/mcal.o: ..\UserApplication\Mcal\Src\Mcal.c \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_flash_ex.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_pwr.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_pwr_ex.h \
+  ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_tim.h \
+  ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_tim_ex.h \
   ..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\stm32h5xx_hal_exti.h \
-  ..\UserApplication\Mcal\Inc\Mcal_Lcfg.h \
-  ..\UserApplication\Application\Inc\App.h
+  ..\UserApplication\Mcal\Inc\Mcal_Lcfg.h

@@ -9,8 +9,6 @@ extern "C" {
                         Includes
 *************************************************************************/
 #include "Std_Types.h"
-#include "stm32h5xx.h"
-#include "stm32h5xx_hal.h"
 /*************************************************************************
                         Macro definition
 *************************************************************************/
@@ -42,6 +40,12 @@ void SysTick_Handler(void);
 /* Generals */
 void Error_Handler(void);
 void Mcal_Init(void);
+/* Timer */
+/* Timer / PWM */
+void Mcal_Tim_PWM_Config_pulseWidth(uint32 channelIndex, uint32 pulseWidth_ns);
+void Mcal_Tim_PWM_Reconfig(uint32 channelIndex, uint32 pulseWidth_ns, uint32 cycleTime_ns);
+void Mcal_Tim_PWM_Disable(uint32 channelIndex);
+void Mcal_Tim_PWM_Enable(uint32 channelIndex);
 
 #ifdef __cplusplus
 }
