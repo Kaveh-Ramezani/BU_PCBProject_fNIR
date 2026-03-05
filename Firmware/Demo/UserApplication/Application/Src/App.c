@@ -26,9 +26,10 @@ App_PinStateType g_App_pinStates =
 {
   PinState_Low, /* currentState */
   PinState_Low, /* lastState */
+  STD_LOW,      /* changed */
 };
 
-uint32 g_App_PulseWidth = 180;
+uint32 g_App_PulseWidth = 0;
 /*************************************************************************
                             Functions
 *************************************************************************/
@@ -66,17 +67,25 @@ static inline void __PWM(void)
   }
 }
 
+static inline void __ADC(void)
+{
+  uint16 data = 0;
+  Std_ReturnType ret = E_NOT_OK;
+  data = Mcal_ADC_GetValue(0, &ret);
+}
+
 void Application_MainFunction(void)
 {
   __blinking();
   __PWM();
+  __ADC();
 }
 /* Initialization */
 void Application_Init(void)
 {
   RESET_PIN(LED_PORT, LED_PIN);
-  Mcal_Tim_PWM_Reconfig(LED1_CHANNEL_IDX,g_App_PulseWidth,CYCLE_TIME);
-  Mcal_Tim_PWM_Reconfig(LED2_CHANNEL_IDX,g_App_PulseWidth,CYCLE_TIME);
+  Mcal_Tim_PWM_Reconfig(LED1_CHANNEL_IDX, 0u, CYCLE_TIME);
+  Mcal_Tim_PWM_Reconfig(LED2_CHANNEL_IDX, 0u, CYCLE_TIME);
   Mcal_Tim_PWM_Enable(LED1_CHANNEL_IDX);
   Mcal_Tim_PWM_Enable(LED2_CHANNEL_IDX);
 }

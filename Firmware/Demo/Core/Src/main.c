@@ -12,6 +12,6 @@ int main(void)
   while (1)
   {
     Application_MainFunction();
-    DELAY_MS(MAIN_TICK_DELAY_MS);
+    // DELAY_MS(MAIN_TICK_DELAY_MS);
   }
 }

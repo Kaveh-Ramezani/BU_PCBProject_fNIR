@@ -38,7 +38,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_CSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_CSI;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.CSIState = RCC_CSI_ON;
   RCC_OscInitStruct.CSICalibrationValue = RCC_CSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -81,59 +82,49 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-// static void ADC1_Init(void)
-// {
+static void ADC1_Init(void)
+{
+  ADC_ChannelConfTypeDef sConfig = {0};
+  /** Common config
+  */
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
+  hadc1.Init.Resolution = ADC_RESOLUTION_10B;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.LowPowerAutoWait = DISABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.SamplingMode = ADC_SAMPLING_MODE_NORMAL;
+  hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+  hadc1.Init.OversamplingMode = ENABLE;
+  hadc1.Init.Oversampling.Ratio = ADC_OVERSAMPLING_RATIO_2;
+  hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_NONE;
+  hadc1.Init.Oversampling.TriggeredMode = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
+  hadc1.Init.Oversampling.OversamplingStopReset = ADC_REGOVERSAMPLING_CONTINUED_MODE;
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
-//   /* USER CODE BEGIN ADC1_Init 0 */
-
-//   /* USER CODE END ADC1_Init 0 */
-
-//   ADC_ChannelConfTypeDef sConfig = {0};
-
-//   /* USER CODE BEGIN ADC1_Init 1 */
-
-//   /* USER CODE END ADC1_Init 1 */
-
-//   /** Common config
-//   */
-//   hadc1.Instance = ADC1;
-//   hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
-//   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-//   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-//   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-//   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
-//   hadc1.Init.LowPowerAutoWait = DISABLE;
-//   hadc1.Init.ContinuousConvMode = ENABLE;
-//   hadc1.Init.NbrOfConversion = 1;
-//   hadc1.Init.DiscontinuousConvMode = DISABLE;
-//   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-//   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-//   hadc1.Init.DMAContinuousRequests = ENABLE;
-//   hadc1.Init.SamplingMode = ADC_SAMPLING_MODE_NORMAL;
-//   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-//   hadc1.Init.OversamplingMode = DISABLE;
-//   if (HAL_ADC_Init(&hadc1) != HAL_OK)
-//   {
-//     Error_Handler();
-//   }
-
-//   /** Configure Regular Channel
-//   */
-//   sConfig.Channel = ADC_CHANNEL_0;
-//   sConfig.Rank = ADC_REGULAR_RANK_1;
-//   sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
-//   sConfig.SingleDiff = ADC_SINGLE_ENDED;
-//   sConfig.OffsetNumber = ADC_OFFSET_NONE;
-//   sConfig.Offset = 0;
-//   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-//   {
-//     Error_Handler();
-//   }
-//   /* USER CODE BEGIN ADC1_Init 2 */
-
-//   /* USER CODE END ADC1_Init 2 */
-
-// }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+  sConfig.SingleDiff = ADC_SINGLE_ENDED;
+  sConfig.OffsetNumber = ADC_OFFSET_NONE;
+  sConfig.Offset = 0;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 /**
   * @brief ICACHE Initialization Function
   * @param None
@@ -141,15 +132,6 @@ void SystemClock_Config(void)
   */
 static void ICACHE_Init(void)
 {
-
-  /* USER CODE BEGIN ICACHE_Init 0 */
-
-  /* USER CODE END ICACHE_Init 0 */
-
-  /* USER CODE BEGIN ICACHE_Init 1 */
-
-  /* USER CODE END ICACHE_Init 1 */
-
   /** Enable instruction cache in 1-way (direct mapped cache)
   */
   if (HAL_ICACHE_ConfigAssociativityMode(ICACHE_1WAY) != HAL_OK)
@@ -160,10 +142,6 @@ static void ICACHE_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN ICACHE_Init 2 */
-
-  /* USER CODE END ICACHE_Init 2 */
-
 }
 /**
   * @brief TIM1 Initialization Function
@@ -172,11 +150,6 @@ static void ICACHE_Init(void)
   */
 static void TIM1_Init(void)
 {
-
-  /* USER CODE BEGIN TIM1_Init 0 */
-
-  /* USER CODE END TIM1_Init 0 */
-
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
@@ -244,11 +217,7 @@ static void TIM1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM1_Init 2 */
-
-  /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
-
 }
 /**
   * @brief GPIO Initialization Function
@@ -258,9 +227,6 @@ static void TIM1_Init(void)
 static void GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -283,10 +249,6 @@ static void GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(OUT_LED_GPIO_Port, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
 /************************** MCAL Msp Initialization and Deinitialization ******/
                     /**
@@ -295,15 +257,60 @@ static void GPIO_Init(void)
 void HAL_MspInit(void)
 {
 
-  /* USER CODE BEGIN MspInit 0 */
+}
+/**
+  * @brief ADC MSP Initialization
+  * This function configures the hardware resources used in this example
+  * @param hadc: ADC handle pointer
+  * @retval None
+  */
+void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  if(hadc->Instance==ADC1)
+  {
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADCDAC;
+    PeriphClkInitStruct.AdcDacClockSelection = RCC_ADCDACCLKSOURCE_HSE;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
-  /* USER CODE END MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_ADC_CLK_ENABLE();
 
-  /* System interrupt init*/
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    /**ADC1 GPIO Configuration
+    PA0     ------> ADC1_INP0
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_0;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  }
+}
+/**
+  * @brief ADC MSP De-Initialization
+  * This function freeze the hardware resources used in this example
+  * @param hadc: ADC handle pointer
+  * @retval None
+  */
+void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
+{
+  if(hadc->Instance==ADC1)
+  {
+    /* Peripheral clock disable */
+    __HAL_RCC_ADC_CLK_DISABLE();
 
-  /* USER CODE BEGIN MspInit 1 */
+    /**ADC1 GPIO Configuration
+    PA0     ------> ADC1_INP0
+    */
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
+  }
 
-  /* USER CODE END MspInit 1 */
 }
 /**
   * @brief TIM_Base MSP Initialization
@@ -315,44 +322,27 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
 {
   if(htim_base->Instance==TIM1)
   {
-    /* USER CODE BEGIN TIM1_MspInit 0 */
-
-    /* USER CODE END TIM1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_TIM1_CLK_ENABLE();
-    /* USER CODE BEGIN TIM1_MspInit 1 */
-
-    /* USER CODE END TIM1_MspInit 1 */
 
   }
-
 }
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(htim->Instance==TIM1)
   {
-    /* USER CODE BEGIN TIM1_MspPostInit 0 */
-
-    /* USER CODE END TIM1_MspPostInit 0 */
-
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**TIM1 GPIO Configuration
     PB4(NJTRST)     ------> TIM1_CH2
-    PB7     ------> TIM1_CH1
-    */
+    PB7     ------> TIM1_CH1 */
     GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_7;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_TIM1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    /* USER CODE BEGIN TIM1_MspPostInit 1 */
-
-    /* USER CODE END TIM1_MspPostInit 1 */
   }
-
 }
 /**
   * @brief TIM_Base MSP De-Initialization
@@ -364,15 +354,10 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
 {
   if(htim_base->Instance==TIM1)
   {
-    /* USER CODE BEGIN TIM1_MspDeInit 0 */
-
-    /* USER CODE END TIM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM1_CLK_DISABLE();
-    /* USER CODE BEGIN TIM1_MspDeInit 1 */
-
-    /* USER CODE END TIM1_MspDeInit 1 */
   }
+
 }
 /************************** Interrupts ****************************************/
 /*           Cortex-M3 Processor Interruption and Exception Handlers          */
@@ -528,6 +513,8 @@ void Mcal_Init(void)
   ICACHE_Init();
   GPIO_Init();
   TIM1_Init();
+  ADC1_Init();
 
   Mcal_TIM_Init();
+  Mcal_ADC_Init();
 }

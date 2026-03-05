@@ -46,6 +46,8 @@ void Mcal_Tim_PWM_Config_pulseWidth(uint32 channelIndex, uint32 pulseWidth_ns);
 void Mcal_Tim_PWM_Reconfig(uint32 channelIndex, uint32 pulseWidth_ns, uint32 cycleTime_ns);
 void Mcal_Tim_PWM_Disable(uint32 channelIndex);
 void Mcal_Tim_PWM_Enable(uint32 channelIndex);
+/* ADC */
+uint16 Mcal_ADC_GetValue(uint8 index, Std_ReturnType* ret);
 
 #ifdef __cplusplus
 }
