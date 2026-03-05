@@ -76,7 +76,64 @@ void SystemClock_Config(void)
   */
   __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
 }
+/**
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+// static void ADC1_Init(void)
+// {
 
+//   /* USER CODE BEGIN ADC1_Init 0 */
+
+//   /* USER CODE END ADC1_Init 0 */
+
+//   ADC_ChannelConfTypeDef sConfig = {0};
+
+//   /* USER CODE BEGIN ADC1_Init 1 */
+
+//   /* USER CODE END ADC1_Init 1 */
+
+//   /** Common config
+//   */
+//   hadc1.Instance = ADC1;
+//   hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
+//   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+//   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+//   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+//   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+//   hadc1.Init.LowPowerAutoWait = DISABLE;
+//   hadc1.Init.ContinuousConvMode = ENABLE;
+//   hadc1.Init.NbrOfConversion = 1;
+//   hadc1.Init.DiscontinuousConvMode = DISABLE;
+//   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+//   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+//   hadc1.Init.DMAContinuousRequests = ENABLE;
+//   hadc1.Init.SamplingMode = ADC_SAMPLING_MODE_NORMAL;
+//   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+//   hadc1.Init.OversamplingMode = DISABLE;
+//   if (HAL_ADC_Init(&hadc1) != HAL_OK)
+//   {
+//     Error_Handler();
+//   }
+
+//   /** Configure Regular Channel
+//   */
+//   sConfig.Channel = ADC_CHANNEL_0;
+//   sConfig.Rank = ADC_REGULAR_RANK_1;
+//   sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+//   sConfig.SingleDiff = ADC_SINGLE_ENDED;
+//   sConfig.OffsetNumber = ADC_OFFSET_NONE;
+//   sConfig.Offset = 0;
+//   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//   {
+//     Error_Handler();
+//   }
+//   /* USER CODE BEGIN ADC1_Init 2 */
+
+//   /* USER CODE END ADC1_Init 2 */
+
+// }
 /**
   * @brief ICACHE Initialization Function
   * @param None
@@ -108,7 +165,6 @@ static void ICACHE_Init(void)
   /* USER CODE END ICACHE_Init 2 */
 
 }
-
 /**
   * @brief TIM1 Initialization Function
   * @param None
@@ -132,10 +188,10 @@ static void TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 1000;
+  htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
   {
     Error_Handler();
@@ -157,7 +213,7 @@ static void TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 500;
+  sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -194,7 +250,6 @@ static void TIM1_Init(void)
   HAL_TIM_MspPostInit(&htim1);
 
 }
-
 /**
   * @brief GPIO Initialization Function
   * @param None
@@ -283,13 +338,13 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**TIM1 GPIO Configuration
-    PB6     ------> TIM1_CH2
+    PB4(NJTRST)     ------> TIM1_CH2
     PB7     ------> TIM1_CH1
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_7;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_TIM1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
