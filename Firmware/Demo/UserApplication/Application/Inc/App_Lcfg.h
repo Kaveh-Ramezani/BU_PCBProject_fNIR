@@ -19,6 +19,8 @@ extern "C" {
 
 #define LED1_CHANNEL_IDX  0u
 #define LED2_CHANNEL_IDX  1u
+#define LED1_ADC_CHANNEL_IDX  0u
+#define LED2_ADC_CHANNEL_IDX  0u
 /*************************************************************************
                         Type definition
 *************************************************************************/

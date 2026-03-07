@@ -30,6 +30,10 @@ App_PinStateType g_App_pinStates =
 };
 
 uint32 g_App_PulseWidth = 0;
+uint16 g_App_data_LED1 = 0;
+uint16 g_App_data_LED2 = 0;
+float32 g_LED1 = 0;
+float32 g_LED2 = 0;
 /*************************************************************************
                             Functions
 *************************************************************************/
@@ -67,17 +71,36 @@ static inline void __PWM(void)
   }
 }
 
+static Std_ReturnType _ADC_readData(uint32 adcChannelIdx, uint16 *retData)
+{
+  Std_ReturnType ret = E_OK;
+  *retData = Mcal_ADC_GetValue(adcChannelIdx, &ret);
+  if(ret != E_OK) *retData = 0;
+  return ret;
+}
+
 static inline void __ADC(void)
 {
-  uint16 data = 0;
   Std_ReturnType ret = E_NOT_OK;
-  data = Mcal_ADC_GetValue(0, &ret);
+  Mcal_Tim_PWM_Config_pulseWidth(LED1_CHANNEL_IDX, CYCLE_TIME);
+  DELAY_MS(3); // wait for DAC
+  ret = _ADC_readData(LED1_ADC_CHANNEL_IDX, &g_App_data_LED1);
+  Mcal_Tim_PWM_Config_pulseWidth(LED1_CHANNEL_IDX, 0u);
+  
+  DELAY_MS(90); // wait for DAC
+
+  Mcal_Tim_PWM_Config_pulseWidth(LED2_CHANNEL_IDX, CYCLE_TIME);
+  DELAY_MS(3); // wait for DAC
+  ret = _ADC_readData(LED1_ADC_CHANNEL_IDX, &g_App_data_LED2);
+  Mcal_Tim_PWM_Config_pulseWidth(LED2_CHANNEL_IDX, 0u);
+	g_LED1 = (((float32)g_App_data_LED1)/4095.0)*3.3;
+	g_LED2 = (((float32)g_App_data_LED2)/4095.0)*3.3;
 }
 
 void Application_MainFunction(void)
 {
   __blinking();
-  __PWM();
+  // __PWM();
   __ADC();
 }
 /* Initialization */

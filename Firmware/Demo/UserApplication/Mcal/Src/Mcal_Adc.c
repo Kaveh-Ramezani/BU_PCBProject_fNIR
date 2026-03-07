@@ -38,12 +38,12 @@
  * @return The function `Mcal_Analog_GetValue` returns a `uint16` value, which is
  * the result of the analog input value after processing and averaging.
  */
-uint16 Mcal_ADC_GetValue(uint8 index, Std_ReturnType* ret)
+uint16 Mcal_ADC_GetValue(uint32 index, Std_ReturnType* ret)
 {
   /* Assertions */
   assert(index < ADC_CHANNELS);
   /* Local variables*/
-  uint64 retData = 0;
+  uint16 retData = 0;
   /* Start the ADC */
   *ret = (Std_ReturnType)HAL_ADC_Start(GetAnalogInputHandler(index));
   if(*ret != E_OK)
@@ -58,7 +58,7 @@ uint16 Mcal_ADC_GetValue(uint8 index, Std_ReturnType* ret)
     return 0;
   }
   /* Get the value and stop the ADC */
-  retData = (((uint64)HAL_ADC_GetValue(GetAnalogInputHandler(index))) >> 2);
+  retData = ((uint16)HAL_ADC_GetValue(GetAnalogInputHandler(index)));
   HAL_ADC_Stop(GetAnalogInputHandler(index));
   
   return retData;
