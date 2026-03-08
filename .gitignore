@@ -102,3 +102,6 @@ Firmware/Demo/Mx/*
 Firmware/Final/Mx/*
 !Firmware/Final/Mx/Firmware.ioc
 !Firmware/Final/Mx/.mxproject
+**/.venv/
+Firmware/PythonCodes/Output/*
+!Firmware/PythonCodes/Output/.gitkeep

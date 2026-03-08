@@ -39,8 +39,8 @@ App_PinStateType g_App_pinStates =
 static uint32 g_App_PulseWidth = 0;
 uint16 g_App_data_LED1 = 0;
 uint16 g_App_data_LED2 = 0;
-static float32 g_LED1 = 0;
-static float32 g_LED2 = 0;
+float32 g_LED1 = 0;
+float32 g_LED2 = 0;
 
 static uint8 g_App_TxBuff[MB_TX_BUFF_SIZE];
 static BufferType g_App_TxBuffer;
