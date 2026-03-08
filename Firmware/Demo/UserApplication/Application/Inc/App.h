@@ -9,6 +9,7 @@ extern "C" {
                         Includes
 *************************************************************************/
 #include "Std_Types.h"
+#include "ComStack_Types.h"
 /*************************************************************************
                         Macro definition
 *************************************************************************/
@@ -26,6 +27,7 @@ extern "C" {
 *************************************************************************/
 void Application_MainFunction(void);
 void Application_Init(void);
+void Application_RxIndication(PduIdType pduId, const PduInfoType* pduInfo);
 
 #ifdef __cplusplus
 }
