@@ -17,13 +17,15 @@ extern "C" {
 #define IN_PORT   GPIOC
 #define IN_PIN    GPIO_PIN_13
 
+#define LED_CHANNELS          (2u)
 #define LED1_CHANNEL_IDX      (0u)
 #define LED2_CHANNEL_IDX      (1u)
 #define LED1_ADC_CHANNEL_IDX  (0u)
 #define LED2_ADC_CHANNEL_IDX  (0u)
 
 #define UART_PDU_ID     (0u)
-#define MB_TX_BUFF_SIZE (128u)
+#define MB_TX_BUFF_SIZE (32u)
+#define MB_RX_BUFF_SIZE (32u)
 /*************************************************************************
                         Type definition
 *************************************************************************/

@@ -2,6 +2,7 @@
 #include "App.h"
 #include "Mcal.h"
 #include "Bsw.h"
+#include "Mcal_Lcfg.h"
 
 int main(void)
 {

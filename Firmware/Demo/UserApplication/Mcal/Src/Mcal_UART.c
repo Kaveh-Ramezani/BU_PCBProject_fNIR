@@ -21,6 +21,7 @@ uint8 g_UART_RxBuff[UART_RX_BUFF_SIZE];
 uint8 g_UART_TxBuff[UART_TX_BUFF_SIZE];
 PduInfoType g_UART_RxPduInfo = {0, g_UART_RxBuff};
 PduInfoType g_UART_TxPduInfo = {0, g_UART_TxBuff};
+boolean g_txReady = TRUE;
 /*************************************************************************
                             Functions
 *************************************************************************/
@@ -67,6 +68,7 @@ void Mcal_UART_Tx_ISR(UART_HandleTypeDef* huart)
   if(g_UART_TxPduMapping[0].huart == huart)
   {
     __switchToRxMode(0);
+    g_txReady = TRUE;
   }
 }
 Std_ReturnType Mcal_UART_TxData(PduIdType txPduId, const PduInfoType* pduInfo)
@@ -95,11 +97,9 @@ Std_ReturnType Mcal_UART_TxData_DMA(PduIdType txPduId,
   g_UART_TxPduInfo.SduLength = pduInfo->SduLength;
   memcpy(g_UART_TxPduInfo.SduDataPtr, pduInfo->SduDataPtr, pduInfo->SduLength);
   /* switch to Tx mode */
-  /* The `__switchToTxMode` function is used to switch the UART communication to transmit mode. It sets
-  the necessary pins or configurations to enable the UART module to transmit data. In the provided
-  code, it is used to set specific pins related to the UART communication for transmitting data. */
   __switchToTxMode(txPduId);
   /* transmit data */
+  g_txReady = FALSE;
   return HAL_UART_Transmit_DMA(g_UART_TxPduMapping[txPduId].huart,
           g_UART_TxPduInfo.SduDataPtr, g_UART_TxPduInfo.SduLength);
 }
@@ -107,10 +107,12 @@ Std_ReturnType Mcal_UART_TxReqRxResp(PduIdType txPduId,
                 const PduInfoType* txPduInfo, BufferType* rxBuffer)
 {
   /* NOTE:: The SduLength in the rxPduInfo should be equal to the maximum size of the tx data. */
-  Std_ReturnType ret;
+  Std_ReturnType ret = E_NOT_OK;
   /* Switch to Tx mode */
   __switchToTxMode(txPduId);
   /* Send request */
+  while(g_txReady == FALSE);
+  while(g_UART_TxPduMapping[txPduId].huart->gState != HAL_UART_STATE_READY);
   ret = (Std_ReturnType)HAL_UART_Transmit(g_UART_TxPduMapping[txPduId].huart,
           txPduInfo->SduDataPtr, txPduInfo->SduLength, UART_TX_MAX_TIMEOUT);
   if(ret != E_OK)

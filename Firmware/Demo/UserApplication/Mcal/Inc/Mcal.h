@@ -56,6 +56,8 @@ Std_ReturnType Mcal_UART_TxData_DMA(PduIdType txPduId, const PduInfoType* pduInf
 Std_ReturnType Mcal_UART_TxData(PduIdType txPduId, const PduInfoType* pduInfo);
 void Mcal_UART_Rx_ISR(UART_HandleTypeDef* huart, uint16 dataSize);
 void Mcal_UART_Tx_ISR(UART_HandleTypeDef* huart);
+Std_ReturnType Mcal_UART_TxReqRxResp(PduIdType txPduId,
+                const PduInfoType* txPduInfo, BufferType* rxBuffer);
 
 #ifdef __cplusplus
 }
