@@ -74,6 +74,7 @@ extern TIM_HandleTypeDef htim1;
 extern ADC_HandleTypeDef hadc1;
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef handle_GPDMA1_Channel0;
+extern DMA_HandleTypeDef handle_GPDMA1_Channel1;
 
 extern const TIM_PWM_ChannelMappingType g_TIM_PWM_ChannelMapping[TIM_PWM_CHANNELS];
 extern const ADC_ChannelMappingType g_AinConfig[ADC_CHANNELS];

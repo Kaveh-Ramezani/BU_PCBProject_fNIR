@@ -170,39 +170,14 @@ static inline void __prepareSendDataRequest(void)
 	Get_App_TxBuffSduPtr()[8] = 0x0D;
 	Get_App_TxBuffSduPtr()[9] = 0x0A;
 }
-static inline void __extractReceiveAck(void)
-{
-  if(Get_App_RxBuffSduLen() != 1)
-  {
-    return;
-  }
-  if(Get_App_RxBuffSduPtr()[0] != 0xAA)
-  {
-    return;
-  }
-}
 static inline void __sendDataToPC(void)
 {
-  Std_ReturnType ret = E_NOT_OK;
   __prepareSendDataRequest();
   // ret_ret = Mcal_UART_TxData_DMA(g_TxPduId, (const PduInfoType*)(Get_App_TxBuffPduInfoPtr()));
-  ret_ret = Mcal_UART_TxReqRxResp(g_TxPduId, (const PduInfoType*)(Get_App_TxBuffPduInfoPtr()),
-      Get_App_RxBuffPtr());
+  Mcal_UART_TxData_DMA(g_TxPduId, (const PduInfoType*)(Get_App_TxBuffPduInfoPtr()));
 }
 /* Read Configurations from PC */
-static inline void __prepareConfigRequest(void)
-{
-  Set_App_TxBuffSduLen(8);
-  Get_App_TxBuffSduPtr()[0] = 0xAA;
-	Get_App_TxBuffSduPtr()[1] = 0xAA;
-	Get_App_TxBuffSduPtr()[2] = 'N';
-	Get_App_TxBuffSduPtr()[3] = 'e';
-	Get_App_TxBuffSduPtr()[4] = 'w';
-	Get_App_TxBuffSduPtr()[5] = 'C';
-	Get_App_TxBuffSduPtr()[6] = 0x0D;
-	Get_App_TxBuffSduPtr()[7] = 0x0A;
-}
-static inline void __extractReceivedConfiguration(void)
+void __extractReceivedConfiguration(const PduInfoType* pduInfo)
 {
   /*
   Byte0: 0xAA                               Byte1: 0xAA
@@ -211,57 +186,48 @@ static inline void __extractReceivedConfiguration(void)
   Byte6: 0x0D                               Byte7: 0X0A
   */
   /* Check the size */
-  if(Get_App_RxBuffSduLen() != 8)
+  if(pduInfo->SduLength != 8)
   {
     return;
   }
   /* Check 0xAAs*/
-  if(!((Get_App_RxBuffSduPtr()[0] == 0xAA) && (Get_App_RxBuffSduPtr()[1] == 0xAA)))
+  if(!((pduInfo->SduDataPtr[0] == 0xAA) && (pduInfo->SduDataPtr[1] == 0xAA)))
   {
     return;
   }
   /* Check end of message */
-  if(!((Get_App_RxBuffSduPtr()[Get_App_RxBuffSduLen()-2] == 0x0D) &&
-       (Get_App_RxBuffSduPtr()[Get_App_RxBuffSduLen()-1] == 0x0A)))
+  if(!((pduInfo->SduDataPtr[pduInfo->SduLength-2] == 0x0D) &&
+       (pduInfo->SduDataPtr[pduInfo->SduLength-1] == 0x0A)))
   {
     return;
   }
   /* Extract */
   for (uint32 idx = 0; idx < LED_CHANNELS; idx++)
   {
-    g_App_configuration.LED_ConfigPtr[idx].intensity = *(uint16*)&Get_App_RxBuffSduPtr()[(idx*2) + 2];
+    g_App_configuration.LED_ConfigPtr[idx].intensity = *(uint16*)(&(pduInfo->SduDataPtr[(idx*2) + 2]));
   }
 }
-static inline void __readConfigFromPC(void)
-{
-  Std_ReturnType ret = E_NOT_OK;
-  if(g_App_readConfigCycle >= READ_CONFIG_CYCLE)
-  {
-    g_App_readConfigCycle = 0;
-
-    __prepareConfigRequest();
-    ret = Mcal_UART_TxReqRxResp(g_TxPduId, (const PduInfoType*)(Get_App_TxBuffPduInfoPtr()),
-      Get_App_RxBuffPtr());
-    if( ret == E_OK)
-    {
-      __extractReceivedConfiguration();
-    }
-  }
-  else
-  {
-    g_App_readConfigCycle++;
-  }
-}
-/* Receive From PC */
 void Application_RxIndication(PduIdType pduId, const PduInfoType* pduInfo)
 {
-  UNUSED(pduId);
-	UNUSED(pduInfo);
+  if(pduInfo == NULL)
+  {
+    return;
+  }
+  if(pduInfo->SduDataPtr == NULL)
+  {
+    return;
+  }
+  if(pduId != g_TxPduId)
+  {
+    return;
+  }
+  __extractReceivedConfiguration(pduInfo);
 }
 /* Main Function */
 void Application_MainFunction(void)
 {
-  __sensing();
+  __blinking();
+	__sensing();
   // __readConfigFromPC();
 	__sendDataToPC();
 }

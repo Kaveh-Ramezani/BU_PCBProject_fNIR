@@ -68,7 +68,6 @@ void Mcal_UART_Tx_ISR(UART_HandleTypeDef* huart)
   if(g_UART_TxPduMapping[0].huart == huart)
   {
     __switchToRxMode(0);
-    g_txReady = TRUE;
   }
 }
 Std_ReturnType Mcal_UART_TxData(PduIdType txPduId, const PduInfoType* pduInfo)
@@ -99,7 +98,6 @@ Std_ReturnType Mcal_UART_TxData_DMA(PduIdType txPduId,
   /* switch to Tx mode */
   __switchToTxMode(txPduId);
   /* transmit data */
-  g_txReady = FALSE;
   return HAL_UART_Transmit_DMA(g_UART_TxPduMapping[txPduId].huart,
           g_UART_TxPduInfo.SduDataPtr, g_UART_TxPduInfo.SduLength);
 }
@@ -111,7 +109,6 @@ Std_ReturnType Mcal_UART_TxReqRxResp(PduIdType txPduId,
   /* Switch to Tx mode */
   __switchToTxMode(txPduId);
   /* Send request */
-  while(g_txReady == FALSE);
   while(g_UART_TxPduMapping[txPduId].huart->gState != HAL_UART_STATE_READY);
   ret = (Std_ReturnType)HAL_UART_Transmit(g_UART_TxPduMapping[txPduId].huart,
           txPduInfo->SduDataPtr, txPduInfo->SduLength, UART_TX_MAX_TIMEOUT);
@@ -131,5 +128,7 @@ Std_ReturnType Mcal_UART_TxReqRxResp(PduIdType txPduId,
 }
 void Mcal_UART_Init(void)
 {
-  
+  HAL_UARTEx_ReceiveToIdle_DMA(g_UART_RxPduMapping[0].huart,
+    g_UART_RxPduInfo.SduDataPtr, UART_RX_BUFF_SIZE);
+  __HAL_DMA_DISABLE_IT(&handle_GPDMA1_Channel1, DMA_IT_HT); // TODO: make this configurable
 }

@@ -13,7 +13,6 @@ import pyqtgraph as pg
 
 # --- 1. Background Worker Thread for Serial Data ---
 class SerialWorker(QThread):
-    # UPDATED: Added a 4th float for the 'DARK' data
     data_ready = pyqtSignal(float, float, float, float)
     error_occurred = pyqtSignal(str)
 
@@ -23,78 +22,55 @@ class SerialWorker(QThread):
         self.baudrate = baudrate
         self.is_running = True
         self.serial_conn = None
-        
-        self.config_lock = threading.Lock()
-        self.current_config = (0, 0) 
 
-    def update_configuration(self, l1_int, l2_int):
-        with self.config_lock:
-            self.current_config = (l1_int, l2_int)
+    def send_configuration(self, l1_int, l2_int):
+        """Called directly by the GUI thread to send settings immediately."""
+        if self.serial_conn and self.serial_conn.is_open:
+            try:
+                # Pack the 2 integers into 4 bytes (<HH)
+                payload_bytes = struct.pack('<HH', l1_int, l2_int)
+                # Construct the 8-byte frame
+                response_packet = bytearray([0xAA, 0xAA]) + payload_bytes + bytearray([0x0D, 0x0A])
+                
+                # Write immediately to the TX line
+                self.serial_conn.write(response_packet)
+                print(f"Sent Config: {response_packet.hex().upper()}")
+            except Exception as e:
+                self.error_occurred.emit(f"Failed to send config: {e}")
 
     def run(self):
-        # Define a quick function to safely write the data
-        def send_delayed_response():
-            if self.serial_conn and self.serial_conn.is_open:
-                self.serial_conn.write(response_packet)
         try:
             self.serial_conn = serial.Serial(self.port, self.baudrate, timeout=0.1)
             buffer = bytearray()
             start_time = time.perf_counter()
 
-            config_request_payload = bytearray([0x4E, 0x65, 0x77, 0x43])
-
             while self.is_running:
                 if self.serial_conn.in_waiting > 0:
                     buffer += self.serial_conn.read(self.serial_conn.in_waiting)
                     
-                    # UPDATED: We now need at least 10 bytes for the ADC data packet
                     while len(buffer) >= 10:
                         # --- Packet Type 1: ADC Data (0x55 0x55 ...) ---
                         if buffer[0] == 0x55 and buffer[1] == 0x55:
-                            # UPDATED: Footer is now at index 8 and 9
                             if buffer[8] == 0x0D and buffer[9] == 0x0A:
                                 raw_data1 = (buffer[3] << 8) | buffer[2]
                                 raw_data2 = (buffer[5] << 8) | buffer[4]
-                                raw_dark  = (buffer[7] << 8) | buffer[6] # NEW: Dark data extraction
+                                raw_dark  = (buffer[7] << 8) | buffer[6]
                                 
                                 data1 = (raw_data1 / 4095.0) * 3.3
                                 data2 = (raw_data2 / 4095.0) * 3.3
-                                dark  = (raw_dark / 4095.0) * 3.3 # Assuming Dark is also a 12-bit ADC value
+                                dark  = (raw_dark / 4095.0) * 3.3
                                 
                                 current_time = time.perf_counter() - start_time
                                 
-                                # Send 4 values to GUI
                                 self.data_ready.emit(current_time, data1, data2, dark)
-                                
-                                response_packet = bytearray([0xAA])
-                                delay_seconds = 0.0 # 50 milliseconds (Change this as needed)
-                                # Start the timer without blocking the main read loop
-                                threading.Timer(delay_seconds, send_delayed_response).start()
-                                # UPDATED: Remove 10 bytes from buffer
                                 buffer = buffer[10:]
                                 continue
-                            
-                        # --- Packet Type 2: Configuration Request (0xAA 0xAA ...) ---
-                        elif buffer[0] == 0xAA and buffer[1] == 0xAA:
-                            if buffer[2:6] == config_request_payload and buffer[6] == 0x0D and buffer[7] == 0x0A:
-                                with self.config_lock:
-                                    cfg = self.current_config
-                                
-                                payload_bytes = struct.pack('<HH', cfg[0], cfg[1])
-                                response_packet = bytearray([0xAA, 0xAA]) + payload_bytes + bytearray([0x0D, 0x0A])
-                                
-                                # --- NEW DELAY LOGIC ---
-                                delay_seconds = 0.0 # 50 milliseconds (Change this as needed)
-                                # Start the timer without blocking the main read loop
-                                threading.Timer(delay_seconds, send_delayed_response).start()
-                                print(f"Delayed response sent: {response_packet.hex().upper()}")
-                                # -----------------------
-                                
-                                buffer = buffer[8:]
-                                continue
-
-                        # If no match, slide window by 1
-                        buffer = buffer[1:]
+                            else:
+                                # Header matched, but footer didn't. Slide by 1.
+                                buffer = buffer[1:]
+                        else:
+                            # Header didn't match. Slide by 1.
+                            buffer = buffer[1:]
 
         except Exception as e:
             self.error_occurred.emit(str(e))
@@ -208,11 +184,12 @@ class MainWindow(QMainWindow):
         l1_int = self.spin_led1_intensity.value()
         l2_int = self.spin_led2_intensity.value()
         
+        # Check if we are connected and the thread is active
         if self.serial_worker and self.serial_worker.is_running:
-            self.serial_worker.update_configuration(l1_int, l2_int)
-            print(f"Settings pushed: LED1: {l1_int}%, LED2: {l2_int}%")
+            self.serial_worker.send_configuration(l1_int, l2_int)
+            QMessageBox.information(self, "Success", f"Settings immediately sent to device:\nLED 1: {l1_int}%\nLED 2: {l2_int}%")
         else:
-            print(f"Settings saved locally: LED1: {l1_int}%, LED2: {l2_int}% (will apply when connected).")
+            QMessageBox.warning(self, "Not Connected", "Cannot send settings. Please connect to a COM port first.")
     
     def handle_error(self, err_msg):
         QMessageBox.critical(self, "Serial Error", f"An error occurred:\n{err_msg}")
