@@ -126,15 +126,28 @@ static void _ledSensing(uint32 chIdx, App_Config* conf)
     3. Read ADC
     4. Disable the LED
   */
+  uint16 data = 0;
   float32 DC = ((float32)(conf->LED_ConfigPtr[chIdx].intensity)/100.0)*((float32)CYCLE_TIME);
   Mcal_Tim_PWM_Config_pulseWidth(chIdx, DC); // Configure channel
   DELAY_MS(DAC_SETTLE_TIME_MS); // wait for DAC
+  // 1 
   ret = _ADC_readData(conf->LED_ConfigPtr[chIdx].adcChannelIdx, &g_App_ledData[chIdx]); // Read ADC
-  Mcal_Tim_PWM_Config_pulseWidth(chIdx, 0u); // Disable channel
 	if(ret != E_OK)
 	{
 		g_App_ledData[chIdx] = 0;
+    Mcal_Tim_PWM_Config_pulseWidth(chIdx, 0u); // Disable channel
+    return;
 	}
+  // 2 
+  ret = _ADC_readData(conf->LED_ConfigPtr[chIdx].adcChannelIdx, &data); // Read ADC
+	if(ret != E_OK)
+	{
+		g_App_ledData[chIdx] = 0;
+    Mcal_Tim_PWM_Config_pulseWidth(chIdx, 0u); // Disable channel
+    return;
+	}
+  g_App_ledData[chIdx] = ((data + g_App_ledData[chIdx])>>1);
+  Mcal_Tim_PWM_Config_pulseWidth(chIdx, 0u); // Disable channel
 }
 static void _darkSensing(void)
 {

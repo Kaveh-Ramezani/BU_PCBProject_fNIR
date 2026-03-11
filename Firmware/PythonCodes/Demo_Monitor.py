@@ -52,17 +52,17 @@ class SerialWorker(QThread):
                         # --- Packet Type 1: ADC Data (0x55 0x55 ...) ---
                         if buffer[0] == 0x55 and buffer[1] == 0x55:
                             if buffer[8] == 0x0D and buffer[9] == 0x0A:
-                                raw_data1 = (buffer[3] << 8) | buffer[2]
-                                raw_data2 = (buffer[5] << 8) | buffer[4]
+                                raw_LED_740nm = (buffer[3] << 8) | buffer[2]
+                                raw_LED_860nm = (buffer[5] << 8) | buffer[4]
                                 raw_dark  = (buffer[7] << 8) | buffer[6]
                                 
-                                data1 = (raw_data1 / 4095.0) * 3.3
-                                data2 = (raw_data2 / 4095.0) * 3.3
-                                dark  = (raw_dark / 4095.0) * 3.3
+                                data_LED_740nm = round((raw_LED_740nm / 4095.0) * 3.3, 3)
+                                data_LED_860nm = round((raw_LED_860nm / 4095.0) * 3.3, 3)
+                                dark  = round((raw_dark / 4095.0) * 3.3, 3)
                                 
                                 current_time = time.perf_counter() - start_time
                                 
-                                self.data_ready.emit(current_time, data1, data2, dark)
+                                self.data_ready.emit(current_time, data_LED_740nm, data_LED_860nm, dark)
                                 buffer = buffer[10:]
                                 continue
                             else:
@@ -93,8 +93,8 @@ class MainWindow(QMainWindow):
         
         # Data lists
         self.time_data = []
-        self.data1_list = []
-        self.data2_list = []
+        self.data_LED_740nm_list = []
+        self.data_LED_860nm_list = []
         self.dark_list = [] # NEW: Storage for Dark data
 
         self.init_ui()
@@ -118,12 +118,12 @@ class MainWindow(QMainWindow):
         self.spin_led1_intensity = QSpinBox()
         self.spin_led1_intensity.setRange(0, 100)
         self.spin_led1_intensity.setSuffix(" %")
-        layout.addRow("LED 1 Intensity:", self.spin_led1_intensity)
+        layout.addRow("740 nm LED (Red) Intensity:", self.spin_led1_intensity)
 
         self.spin_led2_intensity = QSpinBox()
         self.spin_led2_intensity.setRange(0, 100)
         self.spin_led2_intensity.setSuffix(" %")
-        layout.addRow("LED 2 Intensity:", self.spin_led2_intensity)
+        layout.addRow("860 nm LED (IR) Intensity:", self.spin_led2_intensity)
 
         self.btn_apply_settings = QPushButton("Apply Settings")
         self.btn_apply_settings.clicked.connect(self.apply_settings)
@@ -143,9 +143,9 @@ class MainWindow(QMainWindow):
         self.plot_widget.addLegend()
         self.plot_widget.showGrid(x=True, y=True)
 
-        self.curve1 = self.plot_widget.plot(pen=pg.mkPen('b', width=2), name="DATA 1")
-        self.curve2 = self.plot_widget.plot(pen=pg.mkPen('r', width=2), name="DATA 2")
-        self.curve3 = self.plot_widget.plot(pen=pg.mkPen('g', width=2), name="DARK") # NEW: Green curve for Dark
+        self.curve1 = self.plot_widget.plot(pen=pg.mkPen('r', width=2), name="740 nm (Red)")
+        self.curve2 = self.plot_widget.plot(pen=pg.mkPen('b', width=2), name="860 nm (IR)")
+        self.curve3 = self.plot_widget.plot(pen=pg.mkPen('g', width=2), name="Dark Current")
         
         main_layout.addWidget(self.plot_widget)
 
@@ -187,7 +187,7 @@ class MainWindow(QMainWindow):
         # Check if we are connected and the thread is active
         if self.serial_worker and self.serial_worker.is_running:
             self.serial_worker.send_configuration(l1_int, l2_int)
-            QMessageBox.information(self, "Success", f"Settings immediately sent to device:\nLED 1: {l1_int}%\nLED 2: {l2_int}%")
+            QMessageBox.information(self, "Success", f"Settings immediately sent to device:\n740 nm LED (Red): {l1_int}%\n860 nm LED (IR): {l2_int}%")
         else:
             QMessageBox.warning(self, "Not Connected", "Cannot send settings. Please connect to a COM port first.")
     
@@ -209,8 +209,8 @@ class MainWindow(QMainWindow):
 
         # Clear previous data
         self.time_data.clear()
-        self.data1_list.clear()
-        self.data2_list.clear()
+        self.data_LED_740nm_list.clear()
+        self.data_LED_860nm_list.clear()
         self.dark_list.clear() # Clear Dark data
 
         self.serial_worker = SerialWorker(port)
@@ -235,12 +235,12 @@ class MainWindow(QMainWindow):
     # UPDATED: Accept dark as parameter
     def update_data(self, t, d1, d2, dark):
         self.time_data.append(t)
-        self.data1_list.append(d1)
-        self.data2_list.append(d2)
+        self.data_LED_740nm_list.append(d1)
+        self.data_LED_860nm_list.append(d2)
         self.dark_list.append(dark) # NEW: Append dark data
 
-        self.curve1.setData(self.time_data, self.data1_list)
-        self.curve2.setData(self.time_data, self.data2_list)
+        self.curve1.setData(self.time_data, self.data_LED_740nm_list)
+        self.curve2.setData(self.time_data, self.data_LED_860nm_list)
         self.curve3.setData(self.time_data, self.dark_list) # NEW: Update dark curve
 
         if t > 300:
@@ -262,12 +262,12 @@ class MainWindow(QMainWindow):
         try:
             with open(filename, 'w') as f:
                 # UPDATED: Added DARK to the headers
-                f.write("Timestamp(s)\tDelta_t(s)\tDATA1\tDATA2\tDARK\n")
+                f.write("Timestamp(s)\tDelta_t(s)\tdata_LED_740nm\tdata_LED_860nm\tDARK\n")
                 
                 for i in range(len(self.time_data)):
                     t = self.time_data[i]
-                    d1 = self.data1_list[i]
-                    d2 = self.data2_list[i]
+                    d1 = self.data_LED_740nm_list[i]
+                    d2 = self.data_LED_860nm_list[i]
                     dk = self.dark_list[i] # Get dark value
                     
                     delta_t = 0.0 if i == 0 else (self.time_data[i] - self.time_data[i-1])
