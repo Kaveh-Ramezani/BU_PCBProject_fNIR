@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>BU_fNIR_Demo</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUManagedMakefileProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCURootProjectNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Application</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Application</location>
+		</link>
+		<link>
+			<name>Bsw</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Bsw</location>
+		</link>
+		<link>
+			<name>Core</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/Core</location>
+		</link>
+		<link>
+			<name>Inc</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Inc</location>
+		</link>
+		<link>
+			<name>MCUDrivers</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/MCUDrivers</location>
+		</link>
+		<link>
+			<name>Mcal</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Mcal</location>
+		</link>
+		<link>
+			<name>Src</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Src</location>
+		</link>
+	</linkedResources>
+</projectDescription>

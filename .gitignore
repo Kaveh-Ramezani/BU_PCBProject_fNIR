@@ -95,13 +95,22 @@ Docs/datasheets/*
 Project Outputs for*
 
 # Firmware
+# Demo
+# MX files
 Firmware/Demo/Mx/*
 !Firmware/Demo/Mx/.mxproject
 !Firmware/Demo/Mx/MX.ioc
 
+# CubeIDE
+/Firmware/Demo/CubeIDE/BU_fNIR_Demo/Debug/*
+
+# Final
+# MX files
 Firmware/Final/Mx/*
 !Firmware/Final/Mx/Firmware.ioc
 !Firmware/Final/Mx/.mxproject
+
+# Python Codes
 **/.venv/
 Firmware/PythonCodes/Output/*
 !Firmware/PythonCodes/Output/.gitkeep

@@ -53,8 +53,8 @@ const UART_RsProtocolContPinStructType g_UART_RsProtocolPin[UART_COUNTS] =
   {
     NULL /* re_Port */,
     NULL /* de_Port */,
-    NULL /* re_Pin */,
-    NULL /* de_Pin */,
+    0 /* re_Pin */,
+    0 /* de_Pin */,
     FALSE /* isPinReq */
   },
 };
