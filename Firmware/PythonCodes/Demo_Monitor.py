@@ -11,6 +11,10 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
 from PyQt5.QtCore import QThread, pyqtSignal
 import pyqtgraph as pg
 
+ADC_RANGE   = float(2**15)
+ADC_FS      = 3.3
+print(ADC_RANGE)
+print(ADC_FS)
 # --- 1. Background Worker Thread for Serial Data ---
 class SerialWorker(QThread):
     data_ready = pyqtSignal(float, float, float, float)
@@ -56,9 +60,9 @@ class SerialWorker(QThread):
                                 raw_LED_860nm = (buffer[5] << 8) | buffer[4]
                                 raw_dark  = (buffer[7] << 8) | buffer[6]
                                 
-                                data_LED_740nm = round((raw_LED_740nm / 4095.0) * 3.3, 3)
-                                data_LED_860nm = round((raw_LED_860nm / 4095.0) * 3.3, 3)
-                                dark  = round((raw_dark / 4095.0) * 3.3, 3)
+                                data_LED_740nm  = round((raw_LED_740nm  / ADC_RANGE) * ADC_FS, 3)
+                                data_LED_860nm  = round((raw_LED_860nm  / ADC_RANGE) * ADC_FS, 3)
+                                dark            = round((raw_dark       / ADC_RANGE) * ADC_FS, 3)
                                 
                                 current_time = time.perf_counter() - start_time
                                 

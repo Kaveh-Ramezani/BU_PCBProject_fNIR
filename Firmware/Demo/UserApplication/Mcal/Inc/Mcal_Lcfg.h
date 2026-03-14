@@ -75,6 +75,7 @@ extern ADC_HandleTypeDef hadc1;
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef handle_GPDMA1_Channel0;
 extern DMA_HandleTypeDef handle_GPDMA1_Channel1;
+extern I2C_HandleTypeDef hi2c1;
 
 extern const TIM_PWM_ChannelMappingType g_TIM_PWM_ChannelMapping[TIM_PWM_CHANNELS];
 extern const ADC_ChannelMappingType g_AinConfig[ADC_CHANNELS];
@@ -91,6 +92,7 @@ void Mcal_ADC_Init(void);
 void Mcal_UART_Init(void);
 /* DMA Initialization */
 
+/* I2C Initialization */
 
 #ifdef __cplusplus
 }

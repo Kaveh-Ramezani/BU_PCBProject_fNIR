@@ -103,7 +103,7 @@ Firmware/Demo/Mx/*
 
 # CubeIDE
 /Firmware/Demo/CubeIDE/BU_fNIR_Demo/Debug/*
-
+/Firmware/Demo/CubeIDE/.metadata/.plugins/*
 # Final
 # MX files
 Firmware/Final/Mx/*

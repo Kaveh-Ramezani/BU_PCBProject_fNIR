@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H503xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;..\MCUDrivers\STM32H5xx_HAL_Driver\Inc;..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\Legacy;..\MCUDrivers\CMSIS\Device\ST\STM32H5xx\Include;..\MCUDrivers\CMSIS\Include;..\UserApplication\Inc;..\UserApplication\Application\Inc;..\UserApplication\Mcal\Inc;..\UserApplication\Bsw\Inc</IncludePath>
+              <IncludePath>../Core/Inc;..\MCUDrivers\STM32H5xx_HAL_Driver\Inc;..\MCUDrivers\STM32H5xx_HAL_Driver\Inc\Legacy;..\MCUDrivers\CMSIS\Device\ST\STM32H5xx\Include;..\MCUDrivers\CMSIS\Include;..\UserApplication\Inc;..\UserApplication\Application\Inc;..\UserApplication\Mcal\Inc;..\UserApplication\Bsw\Inc;..\UserApplication\ADS111x\Inc;..\UserApplication\Com\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -509,6 +509,16 @@
               <FileType>1</FileType>
               <FilePath>..\MCUDrivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_usart_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32h5xx_hal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MCUDrivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h5xx_hal_i2c_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MCUDrivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -568,6 +578,41 @@
               <FileName>Bsw.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UserApplication\Bsw\Src\Bsw.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>UserApplication/Com</GroupName>
+          <Files>
+            <File>
+              <FileName>Com_ADS111x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UserApplication\Com\Src\Com_ADS111x.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>UserApplicaiton/ADS111x</GroupName>
+          <Files>
+            <File>
+              <FileName>ADS111x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UserApplication\ADS111x\Src\ADS111x.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADS111x_Internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UserApplication\ADS111x\Src\ADS111x_Internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>UserApplication/Common</GroupName>
+          <Files>
+            <File>
+              <FileName>common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\UserApplication\Src\common.c</FilePath>
             </File>
           </Files>
         </Group>

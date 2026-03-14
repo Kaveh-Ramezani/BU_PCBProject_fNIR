@@ -1,40 +1,31 @@
-#ifndef _APP_INTERNAL_H_
-#define _APP_INTERNAL_H_
+#ifndef _COM_INIT_H_
+#define _COM_INIT_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 /*************************************************************************
-                            Includes
+                              Includes
 *************************************************************************/
-#include "App_Lcfg.h"
+#include "Std_Types.h"
+#include "stm32h5xx.h"
+#include "stm32h5xx_hal.h"
 /*************************************************************************
                             Macro definition
 *************************************************************************/
-#define GetLastState()                  (g_App_pinStates.lastState)
-#define GetCurrentState()               (g_App_pinStates.currentState)
-#define IsStateChangeHappend()          ((GetCurrentState() == PinState_High) && (GetLastState() == PinState_Low))
-#define IsStateChanged()                (g_App_pinStates.changed == STD_HIGH)
-#define ADCRawToVoltage(__VALUE__)      ((((float32)__VALUE__)/(float32)ADC_RANGE_MAX)*ADC_VDDA)
 
-#define ResetGlobalIterationCounter()   (g_itCnt = 0) /*!< Resets the global iteration counter (g_itCnt)*/
 /*************************************************************************
                             Type definition
 *************************************************************************/
-#define ADC_BITS  12
-#define ADC_RANGE_MAX ((1 << ADC_BITS) - 1)
-#define ADC_VDDA      (3.3)
 
-#define EACH_MEAS_INTERVAL_MS (90u)
-#define DAC_SETTLE_TIME_MS    (3u)
 /*************************************************************************
                             Variables
 *************************************************************************/
-extern uint8 g_itCnt; /*!< The global iteration counter. It would be used in the try to do something counter. */
+
 /*************************************************************************
                             Functions
 *************************************************************************/
-
+void Com_ADS111X_Init(I2C_HandleTypeDef* hI2C);
 
 #ifdef __cplusplus
 }

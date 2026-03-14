@@ -30,6 +30,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>ADS111x</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/ADS111x</location>
+		</link>
+		<link>
 			<name>Application</name>
 			<type>2</type>
 			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Application</location>
@@ -38,6 +43,11 @@
 			<name>Bsw</name>
 			<type>2</type>
 			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Bsw</location>
+		</link>
+		<link>
+			<name>Com</name>
+			<type>2</type>
+			<location>D:/ElectricalEngineering/altiumDesigner/directory/Design Files/BU_PCBProject_fNIR/Firmware/Demo/UserApplication/Com</location>
 		</link>
 		<link>
 			<name>Core</name>

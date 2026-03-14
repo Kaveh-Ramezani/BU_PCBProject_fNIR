@@ -6,6 +6,7 @@
 #include "App_Lcfg.h"
 #include "App_Internal.h"
 #include "Mcal.h"
+#include "ADS111x.h"
 /*************************************************************************
                             Macro definition
 *************************************************************************/
@@ -77,16 +78,17 @@ App_Config g_App_configuration =
 };
 
 uint16 g_App_ledData[LED_CHANNELS+1] = {0};
-uint32 g_App_readConfigCycle = 0;
-Std_ReturnType g_ret = E_NOT_OK;
+Std_ReturnType g_stdRet = E_NOT_OK;
 
-static uint8 g_App_TxBuff[MB_TX_BUFF_SIZE];
-static uint8 g_App_RxBuff[MB_RX_BUFF_SIZE];
-static BufferType g_App_TxBuffer;
-static BufferType g_App_RxBuffer;
+uint8 g_App_TxBuff[MB_TX_BUFF_SIZE];
+uint8 g_App_RxBuff[MB_RX_BUFF_SIZE];
+BufferType g_App_TxBuffer;
+BufferType g_App_RxBuffer;
+
 // static const PduIdType g_RxPduId = UART_PDU_ID;
 static const PduIdType g_TxPduId = UART_PDU_ID;
-Std_ReturnType ret_ret = E_NOT_OK;
+
+uint8 g_itCnt = 0;
 /*************************************************************************
                             Functions
 *************************************************************************/
@@ -110,12 +112,59 @@ static inline void __blinking(void)
   }
 }
 /* ADC */
+#if(USE_EXTERNAL_ADC == STD_ON)
+boolean _isReadExtADCTriesReachedLimit(void)
+{
+  g_itCnt++;
+  if((g_itCnt == READ_EXT_ADC_TRIES) && (g_stdRet != E_OK))
+  {
+    return TRUE;
+  }
+  else if(g_stdRet != E_OK)
+  {
+    DELAY_MS(READ_EXT_ADC_TRIES_INTERVAL);
+  }
+  return FALSE;
+}
+#endif
 static Std_ReturnType _ADC_readData(uint32 adcChannelIdx, uint16 *retData)
 {
-  Std_ReturnType ret = E_OK;
-  *retData = Mcal_ADC_GetValue(adcChannelIdx, &ret);
-  if(ret != E_OK) *retData = 0;
-  return ret;
+  #if(USE_EXTERNAL_ADC == STD_OFF)
+    *retData = Mcal_ADC_GetValue(adcChannelIdx, &g_stdRet);
+    return g_stdRet;
+  #else
+    boolean convStat = FALSE;
+    UNUSED(adcChannelIdx);
+    /* Ask to start conversion */
+    g_stdRet = ADS111X_StartConversion();
+    if(g_stdRet != E_OK)
+    {
+      return g_stdRet;
+    }
+    /* Check if the conversion has been finished. */
+		ResetGlobalIterationCounter();
+    do{
+      g_stdRet = ADS111X_IsConversionFinished(&convStat);
+      if(_isReadExtADCTriesReachedLimit())
+      {
+        break;
+      }
+    }while((g_stdRet != E_OK) && (convStat == FALSE));
+    if(g_stdRet != E_OK)
+    {
+      return g_stdRet;
+    }
+    /* Get the conversion register. */
+    ResetGlobalIterationCounter();
+    do{
+      g_stdRet = ADS111X_Get_ConversionRegister(retData);
+      if(_isReadExtADCTriesReachedLimit())
+      {
+        break;
+      }
+    }while(g_stdRet != E_OK);
+    return g_stdRet;
+  #endif
 }
 static void _ledSensing(uint32 chIdx, App_Config* conf)
 {
@@ -186,7 +235,6 @@ static inline void __prepareSendDataRequest(void)
 static inline void __sendDataToPC(void)
 {
   __prepareSendDataRequest();
-  // ret_ret = Mcal_UART_TxData_DMA(g_TxPduId, (const PduInfoType*)(Get_App_TxBuffPduInfoPtr()));
   Mcal_UART_TxData_DMA(g_TxPduId, (const PduInfoType*)(Get_App_TxBuffPduInfoPtr()));
 }
 /* Read Configurations from PC */
@@ -251,13 +299,11 @@ void Application_Init(void)
   RESET_PIN(LED_PORT, LED_PIN);
   
   /* Initial Configuration of LED channels */
-  //for(uint32 idx; idx < LED_CHANNELS; idx++)
-  //{
-	Mcal_Tim_PWM_Reconfig(0, 0u, CYCLE_TIME);
-	Mcal_Tim_PWM_Enable(0);
-	Mcal_Tim_PWM_Reconfig(1, 10u, CYCLE_TIME);
-	Mcal_Tim_PWM_Enable(1);
-  //}
+  for(uint32 idx = 0; idx < LED_CHANNELS; idx++)
+  {
+    Mcal_Tim_PWM_Reconfig(idx, 0u, CYCLE_TIME);
+	  Mcal_Tim_PWM_Enable(idx);
+  }
 
   /* Tx buffer initialization */
   g_App_TxBuffer.bufferData.SduDataPtr = &g_App_TxBuff[0];

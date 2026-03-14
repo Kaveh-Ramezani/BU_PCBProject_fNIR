@@ -1,5 +1,5 @@
-#ifndef _APP_INTERNAL_H_
-#define _APP_INTERNAL_H_
+#ifndef _COM_ADS111X_H_
+#define _COM_ADS111X_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,34 +7,31 @@ extern "C" {
 /*************************************************************************
                             Includes
 *************************************************************************/
-#include "App_Lcfg.h"
+#include "Std_Types.h"
 /*************************************************************************
                             Macro definition
 *************************************************************************/
-#define GetLastState()                  (g_App_pinStates.lastState)
-#define GetCurrentState()               (g_App_pinStates.currentState)
-#define IsStateChangeHappend()          ((GetCurrentState() == PinState_High) && (GetLastState() == PinState_Low))
-#define IsStateChanged()                (g_App_pinStates.changed == STD_HIGH)
-#define ADCRawToVoltage(__VALUE__)      ((((float32)__VALUE__)/(float32)ADC_RANGE_MAX)*ADC_VDDA)
-
-#define ResetGlobalIterationCounter()   (g_itCnt = 0) /*!< Resets the global iteration counter (g_itCnt)*/
+#define I2C_TIMEOUT 50u /*!< The default time out of the I2C communication. */
 /*************************************************************************
                             Type definition
 *************************************************************************/
-#define ADC_BITS  12
-#define ADC_RANGE_MAX ((1 << ADC_BITS) - 1)
-#define ADC_VDDA      (3.3)
 
-#define EACH_MEAS_INTERVAL_MS (90u)
-#define DAC_SETTLE_TIME_MS    (3u)
 /*************************************************************************
                             Variables
 *************************************************************************/
-extern uint8 g_itCnt; /*!< The global iteration counter. It would be used in the try to do something counter. */
+
 /*************************************************************************
                             Functions
 *************************************************************************/
+Std_ReturnType Com_ADS111X_Read_ConversionRegister(uint16* outData);
+Std_ReturnType Com_ADS111X_Write_ConfigRegister(uint16 inData);
+Std_ReturnType Com_ADS111X_Read_ConfigRegister(uint16* outData);
+Std_ReturnType Com_ADS111X_Read_LoThreshRegister(uint16* outData);
+Std_ReturnType Com_ADS111X_Write_LoThreshRegister(uint16 inData);
+Std_ReturnType Com_ADS111X_Read_HiThreshRegister(uint16* outData);
+Std_ReturnType Com_ADS111X_Write_HiThreshRegister(uint16 inData);
 
+Std_ReturnType Com_ADS111X_IsConnected(void);
 
 #ifdef __cplusplus
 }

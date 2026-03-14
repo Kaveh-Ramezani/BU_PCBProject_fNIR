@@ -22,6 +22,8 @@
 "mx\stm32h5xx_hal_uart_ex.o"
 "mx\stm32h5xx_hal_usart.o"
 "mx\stm32h5xx_hal_usart_ex.o"
+"mx\stm32h5xx_hal_i2c.o"
+"mx\stm32h5xx_hal_i2c_ex.o"
 "mx\system_stm32h5xx.o"
 "mx\mcal.o"
 "mx\mcal_lcfg.o"
@@ -30,6 +32,10 @@
 "mx\mcal_uart.o"
 "mx\app.o"
 "mx\bsw.o"
+"mx\com_ads111x.o"
+"mx\ads111x.o"
+"mx\ads111x_internal.o"
+"mx\common.o"
 --strict --scatter "MX\MX.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

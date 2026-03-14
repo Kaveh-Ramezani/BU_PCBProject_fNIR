@@ -1,40 +1,40 @@
-/*************************************************************************
-                              Includes
-*************************************************************************/
-#include "Bsw.h"
-#include "Std_Types.h"
-#include "Mcal_Lcfg.h"
-#include "Com_Init.h"
+#ifndef _ADS111X_H_
+#define _ADS111X_H_
 
-#include "ADS111x.h"
-/*************************************************************************
-                              Macro definition
-*************************************************************************/
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*************************************************************************
-                              Type definition
+													Includes
+*************************************************************************/
+#include "ADS111x_Types.h"
+/*************************************************************************
+													Macro definition
 *************************************************************************/
 
 /*************************************************************************
-                              Variables
+													Type definition
 *************************************************************************/
 
 /*************************************************************************
-                              Functions
+													Variables
 *************************************************************************/
 
-/************************** General Functions ***************************/
+/*************************************************************************
+													Global Functions
+*************************************************************************/
+Std_ReturnType ADS111X_Set_ConfigRegister(ADS111X_ConfigRegType* configReg);
+Std_ReturnType ADS111X_Get_ConfigRegister(uint16* configReg);
+Std_ReturnType ADS111X_Get_ConversionRegister(uint16* data);
+Std_ReturnType ADS111X_StartConversion(void);
+Std_ReturnType ADS111X_IsConversionFinished(boolean* stat);
+boolean ADS111X_IsConnected(void);
 
-/************************** Helper Functions ****************************/
+void ADS111X_Init(void);
 
-/************************** Extern Functions ****************************/
-/**
- * The function `Bsw_Init` initializes various modules and peripherals used in the
- * system.
- */
-void Bsw_Init(void)
-{
-  Com_ADS111X_Init(&hi2c1);
-
-  ADS111X_Init();
+#ifdef __cplusplus
 }
+#endif
+
+#endif

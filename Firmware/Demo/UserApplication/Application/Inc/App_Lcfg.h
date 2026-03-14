@@ -26,6 +26,9 @@ extern "C" {
 #define UART_PDU_ID     (0u)
 #define MB_TX_BUFF_SIZE (32u)
 #define MB_RX_BUFF_SIZE (32u)
+
+#define READ_EXT_ADC_TRIES          (5u) /*!< The read external ADC tries before quiting. */
+#define READ_EXT_ADC_TRIES_INTERVAL (1u) /*!< The read external ADC between each try interval in ms. */
 /*************************************************************************
                         Type definition
 *************************************************************************/
